@@ -1,11 +1,11 @@
-About xformers
-==============
+About xformers-feedstock
+========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/xformers-feedstock/blob/main/LICENSE.txt)
 
 Home: https://facebookresearch.github.io/xformers/
 
 Package license: BSD-3-Clause
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/xformers-feedstock/blob/main/LICENSE.txt)
 
 Summary: XFormers: A collection of composable Transformer building blocks.
 
