@@ -30,7 +30,7 @@ requirements:
   run:
     - python
     - numpy
-    - pyre-extensions ==0.0.23
+    - pyre-extensions ==0.0.29
     - pytorch ==1.13.1
 
 test:
