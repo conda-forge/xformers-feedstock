@@ -1,5 +1,5 @@
 {% set name = "xformers" %}
-{% set version = "0.0.16" %}
+{% set version = "0.0.20" %}
 
 package:
   name: {{ name|lower }}
@@ -7,18 +7,18 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xformers-{{ version }}.tar.gz
-  sha256: 92c7f0556a68f4486492691b3f567140ee192b563d904185b6669b1f8bb8ae53
+  sha256: de08cc5844038cc0f13b48cc95d0029863b9aa578c496c2f49b0c882ff9f5901
 
 build:
   script: {{ PYTHON }} -m pip install . -vv
-  number: 2
+  number: 0
   skip: true  # [win]
   missing_dso_whitelist:
     # conda-forge::pytorch provides these libs
-    - "$RPATH/libtorch_cpu.so"
-    - "$RPATH/libtorch_cpu.dylib"
-    - "$RPATH/libc10.so"
-    - "$RPATH/libc10.dylib"
+    - $RPATH/libtorch_cpu.so
+    - $RPATH/libtorch_cpu.dylib
+    - $RPATH/libc10.so
+    - $RPATH/libc10.dylib
 
 requirements:
   build:
@@ -30,7 +30,7 @@ requirements:
   run:
     - python
     - numpy
-    - pyre-extensions ==0.0.23
+    - pyre-extensions ==0.0.29
     - pytorch ==1.13.1
 
 test:
