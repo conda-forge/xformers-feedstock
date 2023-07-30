@@ -51,9 +51,12 @@ test:
 about:
   home: https://facebookresearch.github.io/xformers/
   summary: 'XFormers: A collection of composable Transformer building blocks.'
-  license: BSD-3-Clause
-  license_file: LICENSE
-
+  license: BSD-3-Clause AND APACHE-2.0
+  license_file:
+   - LICENSE
+   - third_party/cutlass/LICENSE.txt
+   - third_party/flash-attention/LICENSE
+   - third_party/sputnik/LICENSE
 extra:
   recipe-maintainers:
     - jan-janssen
