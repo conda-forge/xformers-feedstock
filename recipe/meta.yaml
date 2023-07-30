@@ -11,8 +11,12 @@ source:
 
 build:
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
+  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
   skip: true  # [win]
+  skip: true  # [cuda_compiler_version == "10.2"]
+  skip: true  # [cuda_compiler_version == "11.0"]
+  skip: true  # [cuda_compiler_version == "11.1"]
   rpaths:
     - lib/
     # conda-forge::pytorch provides these libs
@@ -21,16 +25,20 @@ build:
 requirements:
   build:
     - {{ compiler('cxx') }}
+    - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
   host:
     - python
     - pytorch
+    - pytorch =*=cuda*  # [cuda_compiler_version != "None"]
+    - pytorch =*=cpu*   # [cuda_compiler_version == "None"]
     - pytorch >=1.12
     - pip
   run:
     - python
     - numpy
     - pyre-extensions ==0.0.29
-    - pytorch
+    - pytorch =*=cuda*  # [cuda_compiler_version != "None"]
+    - pytorch =*=cpu*   # [cuda_compiler_version == "None"]
 
 test:
   imports:
