@@ -10,7 +10,6 @@ source:
   sha256: de08cc5844038cc0f13b48cc95d0029863b9aa578c496c2f49b0c882ff9f5901
 
 build:
-  script: {{ PYTHON }} -m pip install . -vv
   number: 1
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
