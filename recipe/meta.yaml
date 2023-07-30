@@ -13,12 +13,10 @@ build:
   script: {{ PYTHON }} -m pip install . -vv
   number: 0
   skip: true  # [win]
-  missing_dso_whitelist:
+  rpaths:
+    - lib/
     # conda-forge::pytorch provides these libs
-    - $RPATH/libtorch_cpu.so
-    - $RPATH/libtorch_cpu.dylib
-    - $RPATH/libc10.so
-    - $RPATH/libc10.dylib
+    - {{ SP_DIR }}/torch/lib/
 
 requirements:
   build:
