@@ -6,8 +6,14 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xformers-{{ version }}.tar.gz
-  sha256: de08cc5844038cc0f13b48cc95d0029863b9aa578c496c2f49b0c882ff9f5901
+  - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xformers-{{ version }}.tar.gz
+    sha256: de08cc5844038cc0f13b48cc95d0029863b9aa578c496c2f49b0c882ff9f5901
+  - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
+    sha256: 5f0ea053230eb92267e9e80ed67ec08899ebc55d093eff4a2273a7b340a48cca
+    folder: third_party/cutlass
+  - url: https://raw.githubusercontent.com/Dao-AILab/flash-attention/main/LICENSE
+    sha256: 8c9ccb96c065e706135b6cbad279b721da6156e51f3a5f27c6b3329af9416d73
+    folder: third_party/flash-attention
 
 build:
   number: 1
