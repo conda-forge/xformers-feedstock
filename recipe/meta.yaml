@@ -25,13 +25,14 @@ requirements:
     - {{ compiler('cxx') }}
   host:
     - python
-    - pytorch ==1.13.1
+    - pytorch
+    - pytorch >=1.12
     - pip
   run:
     - python
     - numpy
     - pyre-extensions ==0.0.29
-    - pytorch ==1.13.1
+    - pytorch
 
 test:
   imports:
