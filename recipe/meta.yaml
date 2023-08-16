@@ -2,7 +2,7 @@
 {% set version = "0.0.20" %}
 {% set build_num = 1 %}
 
-{% if cuda_compiler_version == "None" %}
+{% if cuda_compiler_version is not defined or cuda_compiler_version == "None" %}
 {% set build_num = build_num + 1000 %}
 {% endif %}
 
@@ -22,8 +22,8 @@ source:
 
 build:
   number: {{ build_num }}
-  string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+  string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}  # [cuda_compiler_version != "None"]
+  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}                                                # [cuda_compiler_version == "None"]
   skip: true  # [win]
   skip: true  # [cuda_compiler_version == "10.2"]
   skip: true  # [cuda_compiler_version == "11.0"]
