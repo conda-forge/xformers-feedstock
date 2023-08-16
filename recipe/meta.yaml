@@ -34,7 +34,7 @@ build:
     - {{ SP_DIR }}/torch/lib/
   # weigh down gpu implementation and give nocuda preference
   track_features:
-    - cudatoolkit               # [cuda_compiler_version != "None"]
+    - cuda_i7khcYiPpQptWags  # [cuda_compiler_version != "None"]
 
 requirements:
   build:
