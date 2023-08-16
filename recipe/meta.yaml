@@ -1,5 +1,10 @@
 {% set name = "xformers" %}
 {% set version = "0.0.20" %}
+{% set build_num = 1 %}
+
+{% if cuda_compiler_version == "None" %}
+{% set build_num = build_num + 1000 %}
+{% endif %}
 
 package:
   name: {{ name|lower }}
@@ -16,7 +21,7 @@ source:
     folder: third_party/flash-attention
 
 build:
-  number: 1
+  number: {{ build_num }}
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
   skip: true  # [win]
@@ -27,6 +32,9 @@ build:
     - lib/
     # conda-forge::pytorch provides these libs
     - {{ SP_DIR }}/torch/lib/
+  # weigh down gpu implementation and give nocuda preference
+  track_features:
+    - cudatoolkit               # [cuda_compiler_version != "None"]
 
 requirements:
   build:
