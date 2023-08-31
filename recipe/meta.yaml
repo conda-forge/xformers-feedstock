@@ -1,5 +1,5 @@
 {% set name = "xformers" %}
-{% set version = "0.0.20" %}
+{% set version = "0.0.21" %}
 {% set build_num = 1 %}
 
 {% if cuda_compiler_version is not defined or cuda_compiler_version == "None" %}
@@ -12,7 +12,7 @@ package:
 
 source:
   - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xformers-{{ version }}.tar.gz
-    sha256: de08cc5844038cc0f13b48cc95d0029863b9aa578c496c2f49b0c882ff9f5901
+    sha256: 50e536f4a6bff7acf16ae697990d5e5b3634bbcaf784ff19cffb9cc5cda5bbf3
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 5f0ea053230eb92267e9e80ed67ec08899ebc55d093eff4a2273a7b340a48cca
     folder: third_party/cutlass
