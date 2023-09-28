@@ -25,7 +25,7 @@ requirements:
     - {{ compiler('cxx') }}
   host:
     - python
-    - pytorch ==1.13.1
+    - pytorch ==2.0.1
     - pip
   run:
     - python
