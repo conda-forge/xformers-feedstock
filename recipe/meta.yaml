@@ -1,5 +1,5 @@
 {% set name = "xformers" %}
-{% set version = "0.0.21" %}
+{% set version = "0.0.22" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xformers-{{ version }}.tar.gz
-  sha256: 50e536f4a6bff7acf16ae697990d5e5b3634bbcaf784ff19cffb9cc5cda5bbf3
+  sha256: 2644f264c9870c308a0ee2c59652384d7a527ea932eafe12054817acd2faeb72
 
 build:
   script: {{ PYTHON }} -m pip install . -vv
