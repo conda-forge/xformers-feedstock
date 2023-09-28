@@ -6,3 +6,5 @@ conda_build:
 conda_forge_output_validation: true
 bot:
   automerge: true
+azure:
+  free_disk_space: true
