@@ -1,37 +1,58 @@
 {% set name = "xformers" %}
 {% set version = "0.0.21" %}
+{% set build_num = 1 %}
+
+{% if cuda_compiler_version is not defined or cuda_compiler_version == "None" %}
+{% set build_num = build_num + 1000 %}
+{% endif %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xformers-{{ version }}.tar.gz
-  sha256: 50e536f4a6bff7acf16ae697990d5e5b3634bbcaf784ff19cffb9cc5cda5bbf3
+  - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xformers-{{ version }}.tar.gz
+    sha256: 50e536f4a6bff7acf16ae697990d5e5b3634bbcaf784ff19cffb9cc5cda5bbf3
+  - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
+    sha256: 5f0ea053230eb92267e9e80ed67ec08899ebc55d093eff4a2273a7b340a48cca
+    folder: third_party/cutlass
+  - url: https://raw.githubusercontent.com/Dao-AILab/flash-attention/main/LICENSE
+    sha256: 8c9ccb96c065e706135b6cbad279b721da6156e51f3a5f27c6b3329af9416d73
+    folder: third_party/flash-attention
 
 build:
-  script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: {{ build_num }}
+  string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}  # [cuda_compiler_version != "None"]
+  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}                                                # [cuda_compiler_version == "None"]
   skip: true  # [win]
-  missing_dso_whitelist:
+  skip: true  # [cuda_compiler_version == "10.2"]
+  skip: true  # [cuda_compiler_version == "11.0"]
+  skip: true  # [cuda_compiler_version == "11.1"]
+  rpaths:
+    - lib/
     # conda-forge::pytorch provides these libs
-    - $RPATH/libtorch_cpu.so
-    - $RPATH/libtorch_cpu.dylib
-    - $RPATH/libc10.so
-    - $RPATH/libc10.dylib
+    - {{ SP_DIR }}/torch/lib/
+  # weigh down gpu implementation and give nocuda preference
+  track_features:
+    - cuda_i7khcYiPpQptWags  # [cuda_compiler_version != "None"]
 
 requirements:
   build:
     - {{ compiler('cxx') }}
+    - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
   host:
     - python
-    - pytorch ==1.13.1
+    - pytorch
+    - pytorch =*=cuda*  # [cuda_compiler_version != "None"]
+    - pytorch =*=cpu*   # [cuda_compiler_version == "None"]
+    - pytorch >=1.12
     - pip
   run:
     - python
     - numpy
     - pyre-extensions ==0.0.29
-    - pytorch ==1.13.1
+    - pytorch =*=cuda*  # [cuda_compiler_version != "None"]
+    - pytorch =*=cpu*   # [cuda_compiler_version == "None"]
 
 test:
   imports:
@@ -44,9 +65,12 @@ test:
 about:
   home: https://facebookresearch.github.io/xformers/
   summary: 'XFormers: A collection of composable Transformer building blocks.'
-  license: BSD-3-Clause
-  license_file: LICENSE
-
+  license: BSD-3-Clause AND Apache-2.0
+  license_file:
+   - LICENSE
+   - third_party/cutlass/LICENSE.txt
+   - third_party/flash-attention/LICENSE
+   - third_party/sputnik/LICENSE
 extra:
   recipe-maintainers:
     - jan-janssen
