@@ -1,5 +1,5 @@
 {% set name = "xformers" %}
-{% set version = "0.0.21" %}
+{% set version = "0.0.22.post4" %}
 {% set build_num = 1 %}
 
 {% if cuda_compiler_version is not defined or cuda_compiler_version == "None" %}
@@ -12,7 +12,7 @@ package:
 
 source:
   - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xformers-{{ version }}.tar.gz
-    sha256: 50e536f4a6bff7acf16ae697990d5e5b3634bbcaf784ff19cffb9cc5cda5bbf3
+    sha256: ed58b1529e9ad2a094dd4b41585c09d356951f94fc4c2ceb2df89e3191dea72d
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 5f0ea053230eb92267e9e80ed67ec08899ebc55d093eff4a2273a7b340a48cca
     folder: third_party/cutlass
@@ -23,7 +23,7 @@ source:
 build:
   number: {{ build_num }}
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}  # [cuda_compiler_version != "None"]
-  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}                                                # [cuda_compiler_version == "None"]
+  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
   skip: true  # [cuda_compiler_version == "10.2"]
   skip: true  # [cuda_compiler_version == "11.0"]
@@ -67,10 +67,10 @@ about:
   summary: 'XFormers: A collection of composable Transformer building blocks.'
   license: BSD-3-Clause AND Apache-2.0
   license_file:
-   - LICENSE
-   - third_party/cutlass/LICENSE.txt
-   - third_party/flash-attention/LICENSE
-   - third_party/sputnik/LICENSE
+    - LICENSE
+    - third_party/cutlass/LICENSE.txt
+    - third_party/flash-attention/LICENSE
+    - third_party/sputnik/LICENSE
 extra:
   recipe-maintainers:
     - jan-janssen
