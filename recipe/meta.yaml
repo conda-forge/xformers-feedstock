@@ -54,6 +54,7 @@ requirements:
     - cuda-nvtx-dev
     - cuda-nvml-dev
     - libcublas-dev
+    - libcusparse-dev 
     - libcufft-dev 
     - libcurand-dev
     {% endif %}
@@ -72,6 +73,7 @@ requirements:
     - cuda-nvtx-dev
     - cuda-nvml-dev
     - libcublas-dev
+    - libcusparse-dev 
     - libcufft-dev
     - libcurand-dev
     {% endif %}
