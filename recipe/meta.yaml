@@ -73,9 +73,9 @@ requirements:
     - cuda-nvtx-dev
     - cuda-nvml-dev
     - libcublas-dev
-    - libcusparse-dev 
     - libcufft-dev
     - libcurand-dev
+    - libcusparse-dev
     {% endif %}
     - pip
   run:
