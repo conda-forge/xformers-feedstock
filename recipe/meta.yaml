@@ -75,6 +75,7 @@ requirements:
     - libcublas-dev
     - libcufft-dev
     - libcurand-dev
+    - libcusolver-dev
     - libcusparse-dev
     {% endif %}
     - pip
