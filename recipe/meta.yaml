@@ -56,6 +56,7 @@ requirements:
     - libcublas-dev                          # [build_platform != target_platform]
     - libcufft-dev                           # [build_platform != target_platform]
     - libcurand-dev                          # [build_platform != target_platform]
+    - libcusolver-dev                        # [build_platform != target_platform]
     - libcusparse-dev                        # [build_platform != target_platform]
     {% endif %}
  
