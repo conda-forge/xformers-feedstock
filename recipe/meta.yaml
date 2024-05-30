@@ -55,7 +55,7 @@ requirements:
     #- pyre-extensions ==0.0.29
     - pytorch =*=cuda*  # [cuda_compiler_version != "None"]
     - pytorch =*=cpu*   # [cuda_compiler_version == "None"]
-
+    - packaging
 test:
   imports:
     - xformers
