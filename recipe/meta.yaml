@@ -48,6 +48,7 @@ requirements:
     - pytorch >=2.1
     - pip
     - setuptools <70.0.0 
+    - packaging
   run:
     - python
     - numpy
@@ -62,6 +63,8 @@ test:
     - pip check
   requires:
     - pip
+    - setuptools <70.0.0 
+    - packaging
 
 about:
   home: https://facebookresearch.github.io/xformers/
