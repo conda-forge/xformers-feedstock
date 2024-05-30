@@ -14,7 +14,7 @@ source:
   - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xformers-{{ version }}.tar.gz
     sha256: 1d14b5f999ede649198379b0470ebdd25007ba224ae336ef958124158a6de8b1
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
-    sha256: 5f0ea053230eb92267e9e80ed67ec08899ebc55d093eff4a2273a7b340a48cca
+    sha256: 6fc6ad419e4d26571a14c7c4d26b65345865c20dd8686ddcf5e8673f54d3d233
     folder: third_party/cutlass
   - url: https://raw.githubusercontent.com/Dao-AILab/flash-attention/main/LICENSE
     sha256: 8c9ccb96c065e706135b6cbad279b721da6156e51f3a5f27c6b3329af9416d73
