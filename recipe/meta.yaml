@@ -47,6 +47,7 @@ requirements:
     - pytorch =*=cpu*   # [cuda_compiler_version == "None"]
     - pytorch >=2.1
     - pip
+    - setuptools <70.0.0 
   run:
     - python
     - numpy
