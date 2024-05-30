@@ -33,4 +33,4 @@ fi
 
 
 echo "Installing"
-$PYTHON -m pip install . -vv --no-deps --no-build-isolation --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+${PYTHON} -m pip install -vv --no-deps --no-build-isolation --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
