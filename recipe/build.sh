@@ -5,9 +5,9 @@ set -ex
 # Number of CUDA archs reduced to fit CI resources
 if [[ ${cuda_compiler_version} != "None" ]]; then
     if [[ ${cuda_compiler_version} == 11.8 ]]; then
-        export TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9+PTX"
+        export TORCH_CUDA_ARCH_LIST="5.0;6.0;7.0;8.0;8.9+PTX"
     elif [[ ${cuda_compiler_version} == 12.0 ]]; then
-        export TORCH_CUDA_ARCH_LIST="5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9;9.0+PTX"
+        export TORCH_CUDA_ARCH_LIST="5.0;6.0;7.0;8.0;9.0+PTX"
     else
         echo "Unsupported CUDA compiler version. Edit build.sh to add target CUDA archs."
         exit 1
