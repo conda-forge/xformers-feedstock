@@ -1,9 +1,15 @@
 {% set name = "xformers" %}
 {% set version = "0.0.21" %}
-{% set build_num = 1 %}
+{% set build_num = 2 %}
 
 {% if cuda_compiler_version is not defined or cuda_compiler_version == "None" %}
 {% set build_num = build_num + 1000 %}
+{% endif %}
+
+{% if cuda_compiler_version in (None, "None", True, False) %}
+{% set cuda_major = 0 %}
+{% else %}
+{% set cuda_major = environ.get("cuda_compiler_version", "11.8").split(".")[0] | int %}
 {% endif %}
 
 package:
@@ -38,12 +44,39 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ stdlib("c") }}
     - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
+    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
+    {% if cuda_major >= 12 %}
+    - cuda-driver-dev                        # [build_platform != target_platform]
+    - cuda-cudart-dev                        # [build_platform != target_platform]
+    - cuda-nvrtc-dev                         # [build_platform != target_platform]
+    - cuda-nvtx-dev                          # [build_platform != target_platform]
+    - cuda-nvml-dev                          # [build_platform != target_platform]
+    - libcublas-dev                          # [build_platform != target_platform]
+    - libcufft-dev                           # [build_platform != target_platform]
+    - libcurand-dev                          # [build_platform != target_platform]
+    - libcusolver-dev                        # [build_platform != target_platform]
+    - libcusparse-dev                        # [build_platform != target_platform]
+    {% endif %}
+
   host:
     - python
     - pytorch
     - pytorch =*=cuda*  # [cuda_compiler_version != "None"]
     - pytorch =*=cpu*   # [cuda_compiler_version == "None"]
     - pytorch >=1.12
+    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
+    {% if cuda_major >= 12 %}
+    - cuda-driver-dev
+    - cuda-cudart-dev
+    - cuda-nvrtc-dev
+    - cuda-nvtx-dev
+    - cuda-nvml-dev
+    - libcublas-dev
+    - libcufft-dev
+    - libcurand-dev
+    - libcusolver-dev
+    - libcusparse-dev
+    {% endif %}
     - pip
   run:
     - python
