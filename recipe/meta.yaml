@@ -94,6 +94,7 @@ test:
 
 about:
   home: https://facebookresearch.github.io/xformers/
+  dev_url: https://github.com/facebookresearch/xformers
   summary: 'XFormers: A collection of composable Transformer building blocks.'
   license: BSD-3-Clause AND Apache-2.0
   license_file:
