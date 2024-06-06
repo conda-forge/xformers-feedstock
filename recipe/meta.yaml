@@ -1,6 +1,6 @@
 {% set name = "xformers" %}
-{% set version = "0.0.21" %}
-{% set build_num = 2 %}
+{% set version = "0.0.26.post1" %}
+{% set build_num = 0 %}
 
 {% if cuda_compiler_version is not defined or cuda_compiler_version == "None" %}
 {% set build_num = build_num + 1000 %}
@@ -18,7 +18,7 @@ package:
 
 source:
   - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xformers-{{ version }}.tar.gz
-    sha256: 50e536f4a6bff7acf16ae697990d5e5b3634bbcaf784ff19cffb9cc5cda5bbf3
+    sha256: 1d14b5f999ede649198379b0470ebdd25007ba224ae336ef958124158a6de8b1
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 6fc6ad419e4d26571a14c7c4d26b65345865c20dd8686ddcf5e8673f54d3d233
     folder: third_party/cutlass
@@ -29,7 +29,7 @@ source:
 build:
   number: {{ build_num }}
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}  # [cuda_compiler_version != "None"]
-  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}                                                # [cuda_compiler_version == "None"]
+  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
   rpaths:
     - lib/
@@ -63,7 +63,7 @@ requirements:
     - pytorch
     - pytorch =*=cuda*  # [cuda_compiler_version != "None"]
     - pytorch =*=cpu*   # [cuda_compiler_version == "None"]
-    - pytorch >=1.12
+    - pytorch >=2.1
     - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
     {% if cuda_major >= 12 %}
     - cuda-driver-dev
@@ -78,13 +78,13 @@ requirements:
     - libcusparse-dev
     {% endif %}
     - pip
+    - setuptools <70.0.0 
+    - packaging
   run:
     - python
     - numpy
-    - pyre-extensions ==0.0.29
     - pytorch =*=cuda*  # [cuda_compiler_version != "None"]
     - pytorch =*=cpu*   # [cuda_compiler_version == "None"]
-
 test:
   imports:
     - xformers
@@ -92,16 +92,19 @@ test:
     - pip check
   requires:
     - pip
+    - pyre-extensions ==0.0.29
+    - setuptools <70.0.0 
+    - packaging
 
 about:
   home: https://facebookresearch.github.io/xformers/
   summary: 'XFormers: A collection of composable Transformer building blocks.'
   license: BSD-3-Clause AND Apache-2.0
   license_file:
-   - LICENSE
-   - third_party/cutlass/LICENSE.txt
-   - third_party/flash-attention/LICENSE
-   - third_party/sputnik/LICENSE
+    - LICENSE
+    - third_party/cutlass/LICENSE.txt
+    - third_party/flash-attention/LICENSE
+    - third_party/sputnik/LICENSE
 extra:
   recipe-maintainers:
     - jan-janssen
