@@ -9,6 +9,8 @@ Package license: BSD-3-Clause AND Apache-2.0
 
 Summary: XFormers: A collection of composable Transformer building blocks.
 
+Development: https://github.com/facebookresearch/xformers
+
 Current build status
 ====================
 

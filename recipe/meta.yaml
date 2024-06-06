@@ -1,6 +1,5 @@
-{% set name = "xformers" %}
-{% set version = "0.0.21" %}
-{% set build_num = 2 %}
+{% set version = "0.0.23.post1" %}
+{% set build_num = 0 %}
 
 {% if cuda_compiler_version is not defined or cuda_compiler_version == "None" %}
 {% set build_num = build_num + 1000 %}
@@ -13,12 +12,12 @@
 {% endif %}
 
 package:
-  name: {{ name|lower }}
+  name: xformers
   version: {{ version }}
 
 source:
-  - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xformers-{{ version }}.tar.gz
-    sha256: 50e536f4a6bff7acf16ae697990d5e5b3634bbcaf784ff19cffb9cc5cda5bbf3
+  - url: https://pypi.io/packages/source/x/xformers/xformers-{{ version }}.tar.gz
+    sha256: b443b158bd7b5275b485d2c6aee94ebc2152878fd784e379b1c8bcb1d67f3b81
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 6fc6ad419e4d26571a14c7c4d26b65345865c20dd8686ddcf5e8673f54d3d233
     folder: third_party/cutlass
@@ -38,6 +37,18 @@ build:
   # weigh down gpu implementation and give nocuda preference
   track_features:
     - cuda_i7khcYiPpQptWags  # [cuda_compiler_version != "None"]
+  {% if cuda_major >= 12 %}
+  ignore_run_exports_from:
+    # not identical to list of host deps; we do need cuda-cudart,
+    # cuda-driver-dev & cuda-nvml-dev have no run-exports
+    - cuda-nvrtc-dev
+    - cuda-nvtx-dev
+    - libcublas-dev
+    - libcufft-dev
+    - libcurand-dev
+    - libcusolver-dev
+    - libcusparse-dev
+  {% endif %}
 
 requirements:
   build:
@@ -95,13 +106,14 @@ test:
 
 about:
   home: https://facebookresearch.github.io/xformers/
+  dev_url: https://github.com/facebookresearch/xformers
   summary: 'XFormers: A collection of composable Transformer building blocks.'
   license: BSD-3-Clause AND Apache-2.0
   license_file:
-   - LICENSE
-   - third_party/cutlass/LICENSE.txt
-   - third_party/flash-attention/LICENSE
-   - third_party/sputnik/LICENSE
+    - LICENSE
+    - third_party/cutlass/LICENSE.txt
+    - third_party/flash-attention/LICENSE
+    - third_party/sputnik/LICENSE
 extra:
   recipe-maintainers:
     - jan-janssen
