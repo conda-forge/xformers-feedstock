@@ -1,9 +1,15 @@
 {% set name = "xformers" %}
 {% set version = "0.0.21" %}
-{% set build_num = 1 %}
+{% set build_num = 2 %}
 
 {% if cuda_compiler_version is not defined or cuda_compiler_version == "None" %}
 {% set build_num = build_num + 1000 %}
+{% endif %}
+
+{% if cuda_compiler_version in (None, "None", True, False) %}
+{% set cuda_major = 0 %}
+{% else %}
+{% set cuda_major = environ.get("cuda_compiler_version", "11.8").split(".")[0] | int %}
 {% endif %}
 
 package:
@@ -14,7 +20,7 @@ source:
   - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xformers-{{ version }}.tar.gz
     sha256: 50e536f4a6bff7acf16ae697990d5e5b3634bbcaf784ff19cffb9cc5cda5bbf3
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
-    sha256: 5f0ea053230eb92267e9e80ed67ec08899ebc55d093eff4a2273a7b340a48cca
+    sha256: 6fc6ad419e4d26571a14c7c4d26b65345865c20dd8686ddcf5e8673f54d3d233
     folder: third_party/cutlass
   - url: https://raw.githubusercontent.com/Dao-AILab/flash-attention/main/LICENSE
     sha256: 8c9ccb96c065e706135b6cbad279b721da6156e51f3a5f27c6b3329af9416d73
@@ -25,9 +31,6 @@ build:
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}                                                # [cuda_compiler_version == "None"]
   skip: true  # [win]
-  skip: true  # [cuda_compiler_version == "10.2"]
-  skip: true  # [cuda_compiler_version == "11.0"]
-  skip: true  # [cuda_compiler_version == "11.1"]
   rpaths:
     - lib/
     # conda-forge::pytorch provides these libs
@@ -39,13 +42,41 @@ build:
 requirements:
   build:
     - {{ compiler('cxx') }}
+    - {{ stdlib("c") }}
     - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
+    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
+    {% if cuda_major >= 12 %}
+    - cuda-driver-dev                        # [build_platform != target_platform]
+    - cuda-cudart-dev                        # [build_platform != target_platform]
+    - cuda-nvrtc-dev                         # [build_platform != target_platform]
+    - cuda-nvtx-dev                          # [build_platform != target_platform]
+    - cuda-nvml-dev                          # [build_platform != target_platform]
+    - libcublas-dev                          # [build_platform != target_platform]
+    - libcufft-dev                           # [build_platform != target_platform]
+    - libcurand-dev                          # [build_platform != target_platform]
+    - libcusolver-dev                        # [build_platform != target_platform]
+    - libcusparse-dev                        # [build_platform != target_platform]
+    {% endif %}
+
   host:
     - python
     - pytorch
     - pytorch =*=cuda*  # [cuda_compiler_version != "None"]
     - pytorch =*=cpu*   # [cuda_compiler_version == "None"]
     - pytorch >=1.12
+    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
+    {% if cuda_major >= 12 %}
+    - cuda-driver-dev
+    - cuda-cudart-dev
+    - cuda-nvrtc-dev
+    - cuda-nvtx-dev
+    - cuda-nvml-dev
+    - libcublas-dev
+    - libcufft-dev
+    - libcurand-dev
+    - libcusolver-dev
+    - libcusparse-dev
+    {% endif %}
     - pip
   run:
     - python
