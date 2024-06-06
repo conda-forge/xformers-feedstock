@@ -37,6 +37,18 @@ build:
   # weigh down gpu implementation and give nocuda preference
   track_features:
     - cuda_i7khcYiPpQptWags  # [cuda_compiler_version != "None"]
+  {% if cuda_major >= 12 %}
+  ignore_run_exports_from:
+    # not identical to list of host deps; we do need cuda-cudart,
+    # cuda-driver-dev & cuda-nvml-dev have no run-exports
+    - cuda-nvrtc-dev
+    - cuda-nvtx-dev
+    - libcublas-dev
+    - libcufft-dev
+    - libcurand-dev
+    - libcusolver-dev
+    - libcusparse-dev
+  {% endif %}
 
 requirements:
   build:
