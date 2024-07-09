@@ -1,5 +1,5 @@
-{% set version = "0.0.26.post1" %}
-{% set build_num = 1 %}
+{% set version = "0.0.27" %}
+{% set build_num = 0 %}
 
 {% if cuda_compiler_version is not defined or cuda_compiler_version == "None" %}
 {% set build_num = build_num + 1000 %}
@@ -17,7 +17,7 @@ package:
 
 source:
   - url: https://pypi.io/packages/source/x/xformers/xformers-{{ version }}.tar.gz
-    sha256: 1d14b5f999ede649198379b0470ebdd25007ba224ae336ef958124158a6de8b1
+    sha256: 7bf9db7330fbe7b9b633d720db6f2284f939ec1564e4916bae57aafdc265d43d
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 6fc6ad419e4d26571a14c7c4d26b65345865c20dd8686ddcf5e8673f54d3d233
     folder: third_party/cutlass
@@ -28,7 +28,7 @@ source:
 build:
   number: {{ build_num }}
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}  # [cuda_compiler_version != "None"]
-  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}                                                # [cuda_compiler_version == "None"]
+  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
   rpaths:
     - lib/
