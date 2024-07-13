@@ -12,7 +12,7 @@ azure:
     swapfile_size: 16GiB
 github_actions:
   self_hosted: true
-  timeout_minutes: 1440
+  timeout_minutes: 480
   triggers:
   - push
   - pull_request
