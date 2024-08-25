@@ -1,8 +1,8 @@
 {% set version = "0.0.27" %}
-{% set build_num = 0 %}
+{% set build = 1 %}
 
 {% if cuda_compiler_version is not defined or cuda_compiler_version == "None" %}
-{% set build_num = build_num + 1000 %}
+{% set build = build + 1000 %}
 {% endif %}
 
 {% if cuda_compiler_version in (None, "None", True, False) %}
@@ -26,14 +26,10 @@ source:
     folder: third_party/flash-attention
 
 build:
-  number: {{ build_num }}
+  number: {{ build }}
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build_num }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
-  rpaths:
-    - lib/
-    # conda-forge::pytorch provides these libs
-    - {{ SP_DIR }}/torch/lib/
   # weigh down gpu implementation and give nocuda preference
   track_features:
     - cuda_i7khcYiPpQptWags  # [cuda_compiler_version != "None"]
