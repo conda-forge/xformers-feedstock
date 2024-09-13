@@ -67,6 +67,8 @@ requirements:
 
   host:
     - python
+    - pip
+    - setuptools
     - pytorch
     - pytorch =*=cuda*  # [cuda_compiler_version != "None"]
     - pytorch =*=cpu*   # [cuda_compiler_version == "None"]
@@ -84,7 +86,6 @@ requirements:
     - libcusolver-dev
     - libcusparse-dev
     {% endif %}
-    - pip
   run:
     - python
     - numpy
