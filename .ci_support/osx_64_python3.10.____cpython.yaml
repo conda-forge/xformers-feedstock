@@ -17,7 +17,7 @@ cuda_compiler_version:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '16'
+- '17'
 github_actions_labels:
 - cirun-openstack-cpu-xlarge
 macos_machine:
