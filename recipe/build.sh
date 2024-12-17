@@ -15,4 +15,9 @@ if [[ ${cuda_compiler_version} != "None" ]]; then
     export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 fi
 
+# avoid "error: 'value' is unavailable: introduced in macOS 10.13"
+export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
+
+export BUILD_VERSION=${package_version}
+
 $PYTHON -m pip install . -vv --no-deps --no-build-isolation
