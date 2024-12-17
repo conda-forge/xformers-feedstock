@@ -28,7 +28,5 @@ pin_run_as_build:
     max_pin: x.x
 python:
 - 3.11.* *_cpython
-pytorch:
-- '2.5'
 target_platform:
 - osx-64
