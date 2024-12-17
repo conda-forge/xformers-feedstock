@@ -10,14 +10,6 @@ azure:
   free_disk_space: true
   settings_linux:
     swapfile_size: 16GiB
-github_actions:
-  self_hosted: true
-  timeout_minutes: 480
-  triggers:
-  - push
-  - pull_request
-provider:
-  linux_64: github_actions
 build_platform:
   osx_arm64: osx_64
 test: native_and_emulated
