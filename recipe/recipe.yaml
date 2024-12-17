@@ -100,6 +100,8 @@ requirements:
     - ${{ "pytorch * cpu*" if cuda == "false" }}
 
   ignore_run_exports:
+    # not identical to list of host deps; we do need cuda-cudart,
+    # cuda-driver-dev & cuda-nvml-dev have no run-exports
     from_package:
       - if: match(cuda_version, ">=12")
         then:
