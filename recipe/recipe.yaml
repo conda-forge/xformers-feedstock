@@ -1,6 +1,6 @@
 context:
   name: xformers
-  version: "0.0.29.post1"
+  version: "0.0.29.post2"
   build_number: 0
   cuda_version: ${{ env.get("CONDA_OVERRIDE_CUDA", default="None")}}
   cuda: ${{ "true" if cuda_version != "None" else "false" }}
@@ -13,9 +13,9 @@ package:
 
 source:
   - url: https://pypi.io/packages/source/x/xformers/xformers-${{ version }}.tar.gz
-    sha256: d78c256e4c24ecc00f6f374d5b96afd0b56b3fb197f02d9efff4357fd5a399b4
+    sha256: 6ca3d1a6db6f2abff25c1154adee96987f77f4dfd5141771805afa5fc13e9395
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
-    sha256: 6fc6ad419e4d26571a14c7c4d26b65345865c20dd8686ddcf5e8673f54d3d233
+    sha256: 42fec630f410aa308f70a51a89fadcd19586fa620f9831a32bee528a9a10000e
     file_name: third_party/cutlass/LICENSE.txt
   - url: https://raw.githubusercontent.com/Dao-AILab/flash-attention/main/LICENSE
     sha256: 8c9ccb96c065e706135b6cbad279b721da6156e51f3a5f27c6b3329af9416d73
