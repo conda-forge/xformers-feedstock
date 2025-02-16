@@ -23,8 +23,7 @@ source:
 
 build:
   number: ${{ build_number }}
-  skip:
-    - win
+  skip: win or cuda_compiler_version == "11.8"
   string: ${{ string_prefix }}py${{ python | version_to_buildstring }}h${{ hash }}_${{ build_number }}
   variant:
     use_keys:
@@ -74,7 +73,7 @@ requirements:
     - setuptools
     - ${{ "pytorch * cuda*" if cuda == "true" }}
     - ${{ "pytorch * cpu*" if cuda == "false" }}
-    - pytorch >=2.4
+    - pytorch
 
     - if: cuda == "true"
       then:
@@ -130,6 +129,7 @@ about:
     - third_party/sputnik/LICENSE
   summary: "XFormers: A collection of composable Transformer building blocks."
   homepage: https://facebookresearch.github.io/xformers/
+  repository: https://github.com/facebookresearch/xformers
 
 extra:
   recipe-maintainers:
