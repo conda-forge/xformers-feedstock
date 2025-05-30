@@ -1,7 +1,7 @@
 context:
   name: xformers
   version: "0.0.29.post1"
-  build_number: 2
+  build_number: 3
   cuda_version: ${{ env.get("CONDA_OVERRIDE_CUDA", default="None")}}
   cuda: ${{ "enabled" if cuda_version != "None" else "disabled" }}
   cuda_build_string: cuda_${{ cuda_version | version_to_buildstring }}
