@@ -36,6 +36,7 @@ build:
     env:
       cuda_compiler_version: ${{ cuda_version | default('None') }}
       package_version: ${{ version }}
+      XFORMERS_DISABLE_FLASH_ATTN: "1"
 
 requirements:
   build:
