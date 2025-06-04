@@ -43,7 +43,7 @@ requirements:
       then:
         - python
         - cross-python_${{ target_platform }}
-        - pytorch >=2.4
+        - pytorch >=2.7
 
         - if: match(cuda_version, ">=12")
           then:
