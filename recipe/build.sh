@@ -11,6 +11,7 @@ if [[ ${cuda_compiler_version} != "None" ]]; then
         exit 1
     fi
     export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
+    export FORCE_CUDA=1
 fi
 
 # avoid "error: 'value' is unavailable: introduced in macOS 10.13"
