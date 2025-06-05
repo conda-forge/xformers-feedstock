@@ -97,6 +97,9 @@ requirements:
     - pyre-extensions >=0.0.29
     - ${{ "pytorch * cuda*" if cuda == "enabled" }}
     - ${{ "pytorch * cpu*" if cuda == "disabled" }}
+    - if: match(cuda_version, ">=12")
+      then:
+        - cuda-driver-dev
 
   ignore_run_exports:
     # not identical to list of host deps; we do need cuda-cudart,
