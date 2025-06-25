@@ -23,13 +23,11 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.13.* *_cp313
+- 3.12.* *_cpython
 pytorch:
 - '2.6'
 target_platform:
 - linux-64
 zip_keys:
 - - cxx_compiler_version
-  - cuda_compiler
   - cuda_compiler_version
-  - docker_image
