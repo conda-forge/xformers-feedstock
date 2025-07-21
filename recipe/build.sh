@@ -6,7 +6,6 @@ set -ex
 if [[ ${cuda_compiler_version} != "None" ]]; then
     if [[ ${cuda_compiler_version} == 12.6 ]]; then
         export TORCH_CUDA_ARCH_LIST="8.0;8.6;8.9"
-        export CUTLASS_NVCC_ARCHS="80 86 89"
     else
         echo "Unsupported CUDA compiler version. Edit build.sh to add target CUDA archs."
         exit 1
