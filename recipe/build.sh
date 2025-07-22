@@ -5,7 +5,8 @@ set -ex
 # Number of CUDA archs reduced to fit CI resources
 if [[ ${cuda_compiler_version} != "None" ]]; then
     if [[ ${cuda_compiler_version} == 12.6 ]]; then
-        export TORCH_CUDA_ARCH_LIST="5.0;6.0;7.0;7.5;8.0;8.6;8.9;9.0+PTX"
+        # 9.0 causes nvcc 12.6 to crash
+        export TORCH_CUDA_ARCH_LIST="5.0;6.0;7.0;7.5;8.0;8.6;8.9+PTX"
     else
         echo "Unsupported CUDA compiler version. Edit build.sh to add target CUDA archs."
         exit 1
