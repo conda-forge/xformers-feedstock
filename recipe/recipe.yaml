@@ -9,7 +9,7 @@ package:
   version: ${{ version }}
 
 source:
-  - url: https://pypi.io/packages/source/x/xformers/xformers-${{ version }}.tar.gz
+  - url: https://pypi.org/packages/source/x/xformers/xformers-${{ version }}.tar.gz
     sha256: 3fccb159c6327c13fc1b08f8b963c2779ca526e2e50755dee9bcc1bac67d20c6
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 80a7a18b73d41f64dd9ca881af35938f8de88b18c728703251f4c94d1299884d
