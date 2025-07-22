@@ -20,7 +20,7 @@ source:
 
 build:
   number: ${{ build_number }}
-  skip: win or cuda_compiler_version == "11.8"
+  skip: win
   string: ${{ string_prefix }}py${{ python | version_to_buildstring }}h${{ hash }}_${{ build_number }}
   variant:
     # this will down-prioritize the cuda variant versus other variants of the package
