@@ -1,14 +1,11 @@
 context:
-  name: xformers
   version: "0.0.31"
   build_number: 1
-  cuda_version: ${{ env.get("CONDA_OVERRIDE_CUDA", default="None")}}
-  cuda: ${{ "enabled" if cuda_version != "None" else "disabled" }}
-  cuda_build_string: cuda_${{ cuda_version | version_to_buildstring }}
-  string_prefix: ${{ cuda_build_string if cuda ==  "enabled" else "cpu_" }}
+  cuda_build_string: cuda_${{ cuda_compiler_version | version_to_buildstring }}
+  string_prefix: ${{ cuda_build_string if cuda_compiler_version != "None" else "cpu_" }}
 
 package:
-  name: ${{ name|lower }}
+  name: xformers
   version: ${{ version }}
 
 source:
@@ -26,16 +23,10 @@ build:
   skip: win or cuda_compiler_version == "11.8"
   string: ${{ string_prefix }}py${{ python | version_to_buildstring }}h${{ hash }}_${{ build_number }}
   variant:
-    use_keys:
-      # use cuda from the variant config, e.g. to build multiple CUDA variants
-      - ${{ "cuda" if cuda == "enabled" }}
     # this will down-prioritize the cuda variant versus other variants of the package
-    down_prioritize_variant: ${{ 1 if cuda == "enabled" else 0 }}
+    down_prioritize_variant: ${{ 1 if cuda_compiler_version != "None" else 0 }}
   script:
     file: build
-    env:
-      cuda_compiler_version: ${{ cuda_version | default('None') }}
-      package_version: ${{ version }}
 
 requirements:
   build:
@@ -45,7 +36,7 @@ requirements:
         - cross-python_${{ target_platform }}
         - pytorch >=2.7
 
-        - if: match(cuda_version, ">=12")
+        - if: cuda_compiler_version != "None"
           then:
             - cuda-driver-dev
             - cuda-cudart-dev
@@ -62,25 +53,22 @@ requirements:
     - ${{ stdlib('c') }}
     - git
 
-    - if: cuda == "enabled"
+    - if: cuda_compiler_version != "None"
       then:
         - ${{ compiler('cuda') }}
-        - cuda-version ==${{ cuda_version }}
+        - cuda-version ==${{ cuda_compiler_version }}
 
   host:
     - python
     - pip
     - setuptools
-    - ${{ "pytorch * cuda*" if cuda == "enabled" }}
-    - ${{ "pytorch * cpu*" if cuda == "disabled" }}
+    - ${{ "pytorch * cuda*" if cuda_compiler_version != "None" }}
+    - ${{ "pytorch * cpu*" if cuda_compiler_version == "None" }}
     - pytorch
 
-    - if: cuda == "enabled"
+    - if: cuda_compiler_version != "None"
       then:
-        - cuda-version ==${{ cuda_version }}
-
-    - if: match(cuda_version, ">=12")
-      then:
+        - cuda-version ==${{ cuda_compiler_version }}
         - cuda-driver-dev
         - cuda-cudart-dev
         - cuda-nvrtc-dev
@@ -95,9 +83,9 @@ requirements:
     - python
     - numpy
     - pyre-extensions >=0.0.29
-    - ${{ "pytorch * cuda*" if cuda == "enabled" }}
-    - ${{ "pytorch * cpu*" if cuda == "disabled" }}
-    - if: match(cuda_version, ">=12")
+    - ${{ "pytorch * cuda*" if cuda_compiler_version != "None" }}
+    - ${{ "pytorch * cpu*" if cuda_compiler_version == "None" }}
+    - if: cuda_compiler_version != "None"
       then:
         - cuda-driver-dev
 
@@ -105,7 +93,7 @@ requirements:
     # not identical to list of host deps; we do need cuda-cudart,
     # cuda-driver-dev & cuda-nvml-dev have no run-exports
     from_package:
-      - if: match(cuda_version, ">=12")
+      - if: cuda_compiler_version != "None"
         then:
           - cuda-nvrtc-dev
           - cuda-nvtx-dev
