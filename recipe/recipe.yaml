@@ -1,6 +1,6 @@
 context:
   name: xformers
-  version: "0.0.31"
+  version: "0.0.31.post1"
   build_number: 0
   cuda_version: ${{ env.get("CONDA_OVERRIDE_CUDA", default="None")}}
   cuda: ${{ "enabled" if cuda_version != "None" else "disabled" }}
@@ -13,7 +13,7 @@ package:
 
 source:
   - url: https://pypi.io/packages/source/x/xformers/xformers-${{ version }}.tar.gz
-    sha256: 3fccb159c6327c13fc1b08f8b963c2779ca526e2e50755dee9bcc1bac67d20c6
+    sha256: 06a12031a00aadd56fbe543a73258b18064bccdf85fbf5de4c3e67c69e301505
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 80a7a18b73d41f64dd9ca881af35938f8de88b18c728703251f4c94d1299884d
     file_name: third_party/cutlass/LICENSE.txt
