@@ -32,4 +32,5 @@ target_platform:
 - linux-64
 zip_keys:
 - - cxx_compiler_version
+  - c_stdlib_version
   - cuda_compiler_version
