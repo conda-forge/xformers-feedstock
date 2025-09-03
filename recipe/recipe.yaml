@@ -1,6 +1,6 @@
 context:
   version: "0.0.31.post1"
-  build_number: 0
+  build_number: 1
   cuda_build_string: cuda_${{ cuda_compiler_version | version_to_buildstring }}
   string_prefix: ${{ cuda_build_string if cuda_compiler_version != "None" else "cpu_" }}
 
@@ -11,6 +11,8 @@ package:
 source:
   - url: https://pypi.org/packages/source/x/xformers/xformers-${{ version }}.tar.gz
     sha256: 06a12031a00aadd56fbe543a73258b18064bccdf85fbf5de4c3e67c69e301505
+    patches:
+      - patches/0001-allow-newer-CUDA-arches-for-vendored-flash-attn.patch
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 80a7a18b73d41f64dd9ca881af35938f8de88b18c728703251f4c94d1299884d
     file_name: third_party/cutlass/LICENSE.txt
