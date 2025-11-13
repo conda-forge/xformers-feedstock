@@ -1,5 +1,5 @@
 context:
-  version: "0.0.32.post2"
+  version: "0.0.33.post1"
   build_number: 0
   cuda_build_string: cuda_${{ cuda_compiler_version | version_to_buildstring }}
   string_prefix: ${{ cuda_build_string if cuda_compiler_version != "None" else "cpu_" }}
@@ -10,7 +10,7 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/x/xformers/xformers-${{ version }}.tar.gz
-    sha256: 9538be803969c6e1ca16a3ece921e472c24f79970b10be1087a389dcb66e412a
+    sha256: e555258249b514ba117b3403523fe0bd7d3e92e930575f0e0dbf5f7db5b42677
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 80a7a18b73d41f64dd9ca881af35938f8de88b18c728703251f4c94d1299884d
     file_name: third_party/cutlass/LICENSE.txt
