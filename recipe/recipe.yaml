@@ -20,7 +20,10 @@ source:
 
 build:
   number: ${{ build_number }}
-  skip: win
+  skip:
+    - win
+    # DEBUG
+    - match(python, "!=3.13")
   string: ${{ string_prefix }}py${{ python | version_to_buildstring }}h${{ hash }}_${{ build_number }}
   script:
     file: build
