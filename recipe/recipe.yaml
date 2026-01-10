@@ -1,5 +1,5 @@
 context:
-  version: "0.0.32.post2"
+  version: "0.0.33.post2"
   build_number: 0
   cuda_build_string: cuda_${{ cuda_compiler_version | version_to_buildstring }}
   string_prefix: ${{ cuda_build_string if cuda_compiler_version != "None" else "cpu_" }}
@@ -10,9 +10,9 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/x/xformers/xformers-${{ version }}.tar.gz
-    sha256: 9538be803969c6e1ca16a3ece921e472c24f79970b10be1087a389dcb66e412a
+    sha256: 647ddf26578d2b8643230467ef1f0fbfef0bbe556a546bd27a70d4855d3433e1
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
-    sha256: 80a7a18b73d41f64dd9ca881af35938f8de88b18c728703251f4c94d1299884d
+    sha256: 7bc733829f16663593865344541c6dcc433beb6b6b555c8f86a43e9b399993cf
     file_name: third_party/cutlass/LICENSE.txt
   - url: https://raw.githubusercontent.com/Dao-AILab/flash-attention/main/LICENSE
     sha256: 8c9ccb96c065e706135b6cbad279b721da6156e51f3a5f27c6b3329af9416d73
@@ -20,7 +20,8 @@ source:
 
 build:
   number: ${{ build_number }}
-  skip: win
+  skip:
+    - win
   string: ${{ string_prefix }}py${{ python | version_to_buildstring }}h${{ hash }}_${{ build_number }}
   script:
     file: build
@@ -31,8 +32,7 @@ requirements:
       then:
         - python
         - cross-python_${{ target_platform }}
-        - pytorch >=2.7
-
+        - pytorch
         - if: cuda_compiler_version != "None"
           then:
             - cuda-driver-dev
@@ -45,16 +45,13 @@ requirements:
             - libcurand-dev
             - libcusolver-dev
             - libcusparse-dev
-
     - ${{ compiler('cxx') }}
     - ${{ stdlib('c') }}
     - git
-
     - if: cuda_compiler_version != "None"
       then:
         - ${{ compiler('cuda') }}
         - cuda-version ==${{ cuda_compiler_version }}
-
   host:
     - python
     - pip
@@ -62,7 +59,6 @@ requirements:
     - ${{ "pytorch * cuda*" if cuda_compiler_version != "None" }}
     - ${{ "pytorch * cpu*" if cuda_compiler_version == "None" }}
     - pytorch
-
     - if: cuda_compiler_version != "None"
       then:
         - cuda-version ==${{ cuda_compiler_version }}
@@ -85,7 +81,6 @@ requirements:
     - if: cuda_compiler_version != "None"
       then:
         - cuda-driver-dev
-
   ignore_run_exports:
     # not identical to list of host deps; we do need cuda-cudart,
     # cuda-driver-dev & cuda-nvml-dev have no run-exports

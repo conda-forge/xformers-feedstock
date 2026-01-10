@@ -3,5 +3,5 @@
 c_stdlib_version:  # [osx and x86_64]
   - '10.15'        # [osx and x86_64]
 
-github_actions_labels:
-- cirun-openstack-cpu-xlarge
+github_actions_labels:          # [linux]
+- cirun-openstack-cpu-xlarge    # [linux]
