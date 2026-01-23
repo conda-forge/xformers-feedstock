@@ -1,6 +1,6 @@
 context:
-  version: "0.0.33.post2"
-  build_number: 2
+  version: "0.0.34"
+  build_number: 0
   cuda_build_string: cuda_${{ cuda_compiler_version | version_to_buildstring }}
   string_prefix: ${{ cuda_build_string if cuda_compiler_version != "None" else "cpu_" }}
   python_check_max: "3.14"
@@ -11,7 +11,7 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/x/xformers/xformers-${{ version }}.tar.gz
-    sha256: 647ddf26578d2b8643230467ef1f0fbfef0bbe556a546bd27a70d4855d3433e1
+    sha256: 716bd9ffe61f46c2cc0536abf8b8c43ec594bea47a49394ea5cfa417e9de6a6f
     patches:
       - patches/0001-allow-newer-CUDA-arches-for-vendored-flash-attn.patch
       # override outdated python minimum
