@@ -4,8 +4,9 @@ set -ex
 # https://github.com/conda-forge/pytorch-cpu-feedstock/blob/main/recipe/build_pytorch.sh
 # Number of CUDA archs reduced to fit CI resources
 if [[ ${cuda_compiler_version} != "None" ]]; then
-    if [[ ${cuda_compiler_version} == 12.9 ]]; then
-        export TORCH_CUDA_ARCH_LIST="5.0;6.0;7.0;7.5;8.0;8.6;8.9;10.0;12.0+PTX"
+    if [[ ${cuda_compiler_version} == 12.9 || ${cuda_compiler_version} == 13.0 ]]; then
+        # leave out 9.0 due to https://github.com/conda-forge/cuda-nvcc-feedstock/issues/86
+        export TORCH_CUDA_ARCH_LIST="8.0;8.9;10.0;12.0+PTX"
     else
         echo "Unsupported CUDA compiler version. Edit build.sh to add target CUDA archs."
         exit 1
