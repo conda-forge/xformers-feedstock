@@ -14,6 +14,8 @@ source:
     sha256: 647ddf26578d2b8643230467ef1f0fbfef0bbe556a546bd27a70d4855d3433e1
     patches:
       - patches/0001-allow-newer-CUDA-arches-for-vendored-flash-attn.patch
+      # override outdated python minimum
+      - patches/0002-use-3.10-as-Py_LIMITED_API.patch
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 7bc733829f16663593865344541c6dcc433beb6b6b555c8f86a43e9b399993cf
     file_name: third_party/cutlass/LICENSE.txt

@@ -1,0 +1,27 @@
+From 9fb9780e43a9bc3cef5a31c7d33e6018f15ffe62 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Fri, 6 Feb 2026 18:41:40 +1100
+Subject: [PATCH 2/2] use 3.10 as Py_LIMITED_API
+
+---
+ setup.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index f8f0b2c8..b3ee206e 100644
+--- a/setup.py
++++ b/setup.py
+@@ -482,11 +482,11 @@ def get_extensions():
+ 
+     define_macros = []
+ 
+-    extra_compile_args = {"cxx": ["-O3", "-std=c++17", "-DPy_LIMITED_API=0x03090000"]}
++    extra_compile_args = {"cxx": ["-O3", "-std=c++17", "-DPy_LIMITED_API=0x030A0000"]}
+     if sys.platform == "win32":
+         if os.getenv("DISTUTILS_USE_SDK") == "1":
+             extra_compile_args = {
+-                "cxx": ["-O2", "/std:c++17", "/DPy_LIMITED_API=0x03090000"]
++                "cxx": ["-O2", "/std:c++17", "/DPy_LIMITED_API=0x030A0000"]
+             }
+         define_macros += [("xformers_EXPORTS", None)]
+         extra_compile_args["cxx"].extend(
