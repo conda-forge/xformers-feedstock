@@ -122,7 +122,6 @@ about:
     - LICENSE
     - third_party/cutlass/LICENSE.txt
     - third_party/flash-attention/LICENSE
-    - third_party/sputnik/LICENSE
   summary: "XFormers: A collection of composable Transformer building blocks."
   homepage: https://facebookresearch.github.io/xformers/
   repository: https://github.com/facebookresearch/xformers
