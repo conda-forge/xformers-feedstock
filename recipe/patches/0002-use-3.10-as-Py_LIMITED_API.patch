@@ -1,17 +1,17 @@
-From 9fb9780e43a9bc3cef5a31c7d33e6018f15ffe62 Mon Sep 17 00:00:00 2001
+From 313a355341e6f095247221604e2d51bda62a2920 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 6 Feb 2026 18:41:40 +1100
-Subject: [PATCH 2/2] use 3.10 as Py_LIMITED_API
+Subject: [PATCH 2/3] use 3.10 as Py_LIMITED_API
 
 ---
  setup.py | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index f8f0b2c8..b3ee206e 100644
+index 40d1bd3b..c605abb3 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -482,11 +482,11 @@ def get_extensions():
+@@ -319,11 +319,11 @@ def get_extensions():
  
      define_macros = []
  

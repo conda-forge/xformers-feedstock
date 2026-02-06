@@ -16,6 +16,8 @@ source:
       - patches/0001-allow-newer-CUDA-arches-for-vendored-flash-attn.patch
       # override outdated python minimum
       - patches/0002-use-3.10-as-Py_LIMITED_API.patch
+      # backport https://github.com/facebookresearch/xformers/commit/88dcc2ce379f699557714561c4a619cadc4c8ad5
+      - patches/0003-Re-allow-CUDA-less-builds-fairinternal-xformers-1472.patch
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 7bc733829f16663593865344541c6dcc433beb6b6b555c8f86a43e9b399993cf
     file_name: third_party/cutlass/LICENSE.txt

@@ -1,0 +1,95 @@
+From ac08841a4fd657a0b0dd6e71018016e163b11125 Mon Sep 17 00:00:00 2001
+From: Luca Wehrstedt <lcw@meta.com>
+Date: Thu, 5 Feb 2026 12:45:04 +0000
+Subject: [PATCH 3/3] Re-allow CUDA-less builds (fairinternal/xformers#1472)
+
+__original_commit__ = fairinternal/xformers@896a06e4810b2beafc1de83d3118eec326c3fe69
+---
+ setup.py                                      |  3 +--
+ ...pt_stable_utils.cpp => pt_stable_utils.cu} |  0
+ xformers/csrc/pt_stable_utils.h               | 20 ++++++++++++++-----
+ 3 files changed, 16 insertions(+), 7 deletions(-)
+ rename xformers/csrc/{pt_stable_utils.cpp => pt_stable_utils.cu} (100%)
+
+diff --git a/setup.py b/setup.py
+index c605abb3..669b10fc 100644
+--- a/setup.py
++++ b/setup.py
+@@ -392,10 +392,9 @@ def get_extensions():
+         stable_args = [
+             "-DTORCH_STABLE_ONLY",
+             "-DTORCH_TARGET_VERSION=0x020a000000000000",
+-            "-DUSE_CUDA",
+         ]
+         extra_compile_args["cxx"].extend(stable_args)
+-        extra_compile_args["nvcc"].extend(stable_args)
++        extra_compile_args["nvcc"].extend(stable_args + ["-DUSE_CUDA"])
+ 
+         ext_modules += get_flash_attention3_extensions(cuda_version, extra_compile_args)
+ 
+diff --git a/xformers/csrc/pt_stable_utils.cpp b/xformers/csrc/pt_stable_utils.cu
+similarity index 100%
+rename from xformers/csrc/pt_stable_utils.cpp
+rename to xformers/csrc/pt_stable_utils.cu
+diff --git a/xformers/csrc/pt_stable_utils.h b/xformers/csrc/pt_stable_utils.h
+index 083b4e90..d7fc0bd5 100644
+--- a/xformers/csrc/pt_stable_utils.h
++++ b/xformers/csrc/pt_stable_utils.h
+@@ -9,8 +9,10 @@
+ #include <type_traits>
+ #include <vector>
+ 
++#ifdef USE_CUDA
+ #include <cuda.h>
+ #include <cuda_runtime.h>
++#endif
+ 
+ #include <torch/csrc/stable/library.h>
+ #include <torch/csrc/stable/macros.h>
+@@ -20,6 +22,8 @@
+ #include <torch/headeronly/core/TensorAccessor.h>
+ #include <torch/headeronly/util/Metaprogramming.h>
+ 
++#ifdef USE_CUDA
++
+ #define XF_CUDA_DRIVER_CHECK(EXPR)                   \
+   do {                                               \
+     const CUresult __err = EXPR;                     \
+@@ -30,8 +34,12 @@
+ 
+ cudaDeviceProp* xf_getCurrentDeviceProperties();
+ 
++#endif
++
+ namespace {
+ 
++#ifdef USE_CUDA
++
+ cudaStream_t xf_getCurrentCUDAStream(
+     torch::stable::accelerator::DeviceIndex index = -1) {
+   // This would be the correct code to use, but it's currently broken.
+@@ -44,17 +52,19 @@ cudaStream_t xf_getCurrentCUDAStream(
+   return static_cast<cudaStream_t>(ret);
+ }
+ 
++template <typename T>
++constexpr __host__ __device__ inline T ceil_div(T a, T b) {
++  return (a + b - 1) / b;
++}
++
++#endif
++
+ template <typename dtype, size_t ndim>
+ auto xf_packed_accessor(const torch::stable::Tensor& t) {
+   return torch::headeronly::HeaderOnlyGenericPackedTensorAccessor<dtype, ndim>(
+       t.mutable_data_ptr<dtype>(), t.sizes().data(), t.strides().data());
+ }
+ 
+-template <typename T>
+-constexpr __host__ __device__ inline T ceil_div(T a, T b) {
+-  return (a + b - 1) / b;
+-}
+-
+ inline int32_t xf_get_layout(const torch::stable::Tensor& self) {
+   int32_t layout;
+   TORCH_ERROR_CODE_CHECK(aoti_torch_get_layout(self.get(), &layout));
