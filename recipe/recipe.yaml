@@ -1,8 +1,9 @@
 context:
   version: "0.0.33.post2"
-  build_number: 1
+  build_number: 2
   cuda_build_string: cuda_${{ cuda_compiler_version | version_to_buildstring }}
   string_prefix: ${{ cuda_build_string if cuda_compiler_version != "None" else "cpu_" }}
+  python_check_max: "3.14"
 
 package:
   name: xformers
@@ -13,6 +14,8 @@ source:
     sha256: 647ddf26578d2b8643230467ef1f0fbfef0bbe556a546bd27a70d4855d3433e1
     patches:
       - patches/0001-allow-newer-CUDA-arches-for-vendored-flash-attn.patch
+      # override outdated python minimum
+      - patches/0002-use-3.10-as-Py_LIMITED_API.patch
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 7bc733829f16663593865344541c6dcc433beb6b6b555c8f86a43e9b399993cf
     file_name: third_party/cutlass/LICENSE.txt
@@ -23,10 +26,13 @@ source:
 build:
   number: ${{ build_number }}
   skip:
+    - is_abi3 and not is_python_min
     - win
   string: ${{ string_prefix }}py${{ python | version_to_buildstring }}h${{ hash }}_${{ build_number }}
   script:
     file: build
+  python:
+    version_independent: ${{ is_abi3 }}
 
 requirements:
   build:
@@ -102,6 +108,9 @@ tests:
       imports:
         - xformers
       pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - ${{ python_check_max }}.*
   - script:
       - python -m xformers.info
 

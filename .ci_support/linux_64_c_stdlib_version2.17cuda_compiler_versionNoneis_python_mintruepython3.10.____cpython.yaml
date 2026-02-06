@@ -18,12 +18,18 @@ docker_image:
 - quay.io/condaforge/linux-anvil-x86_64:alma9
 github_actions_labels:
 - cirun-openstack-cpu-xlarge
+is_abi3:
+- true
+is_python_min:
+- true
 pin_run_as_build:
   python:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.13.* *_cp313
+- 3.10.* *_cpython
+python_min:
+- '3.10'
 pytorch:
 - '2.10'
 target_platform:
@@ -32,3 +38,5 @@ zip_keys:
 - - cxx_compiler_version
   - c_stdlib_version
   - cuda_compiler_version
+- - python
+  - is_python_min
