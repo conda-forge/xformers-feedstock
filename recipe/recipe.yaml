@@ -1,6 +1,6 @@
 context:
-  version: "0.0.33.post2"
-  build_number: 2
+  version: "0.0.34"
+  build_number: 0
   cuda_build_string: cuda_${{ cuda_compiler_version | version_to_buildstring }}
   string_prefix: ${{ cuda_build_string if cuda_compiler_version != "None" else "cpu_" }}
   python_check_max: "3.14"
@@ -11,11 +11,13 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/x/xformers/xformers-${{ version }}.tar.gz
-    sha256: 647ddf26578d2b8643230467ef1f0fbfef0bbe556a546bd27a70d4855d3433e1
+    sha256: 716bd9ffe61f46c2cc0536abf8b8c43ec594bea47a49394ea5cfa417e9de6a6f
     patches:
       - patches/0001-allow-newer-CUDA-arches-for-vendored-flash-attn.patch
       # override outdated python minimum
       - patches/0002-use-3.10-as-Py_LIMITED_API.patch
+      # backport https://github.com/facebookresearch/xformers/commit/88dcc2ce379f699557714561c4a619cadc4c8ad5
+      - patches/0003-Re-allow-CUDA-less-builds-fairinternal-xformers-1472.patch
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
     sha256: 7bc733829f16663593865344541c6dcc433beb6b6b555c8f86a43e9b399993cf
     file_name: third_party/cutlass/LICENSE.txt
@@ -120,7 +122,6 @@ about:
     - LICENSE
     - third_party/cutlass/LICENSE.txt
     - third_party/flash-attention/LICENSE
-    - third_party/sputnik/LICENSE
   summary: "XFormers: A collection of composable Transformer building blocks."
   homepage: https://facebookresearch.github.io/xformers/
   repository: https://github.com/facebookresearch/xformers
