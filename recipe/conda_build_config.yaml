@@ -2,4 +2,4 @@ c_stdlib_version:   # [osx]
   - '11.0'          # [osx]
 
 github_actions_labels:          # [linux]
-- cirun-openstack-cpu-xlarge    # [linux]
+- blacksmith-8vcpu-ubuntu-2404  # [linux]
