@@ -19,7 +19,7 @@ source:
       # backport https://github.com/facebookresearch/xformers/commit/88dcc2ce379f699557714561c4a619cadc4c8ad5
       - patches/0003-Re-allow-CUDA-less-builds-fairinternal-xformers-1472.patch
   - url: https://raw.githubusercontent.com/NVIDIA/cutlass/main/LICENSE.txt
-    sha256: 7bc733829f16663593865344541c6dcc433beb6b6b555c8f86a43e9b399993cf
+    sha256: ad1513ca983da737a6843364ad19e8424a56d860736c2da773b8c5be527e1475
     file_name: third_party/cutlass/LICENSE.txt
   - url: https://raw.githubusercontent.com/Dao-AILab/flash-attention/main/LICENSE
     sha256: 8c9ccb96c065e706135b6cbad279b721da6156e51f3a5f27c6b3329af9416d73
