@@ -17,7 +17,7 @@ cxx_compiler_version:
 docker_image:
 - quay.io/condaforge/linux-anvil-x86_64:alma9
 github_actions_labels:
-- cirun-openstack-cpu-xlarge
+- blacksmith-8vcpu-ubuntu-2404
 is_abi3:
 - true
 is_python_min:
@@ -31,7 +31,7 @@ python:
 python_min:
 - '3.10'
 pytorch:
-- '2.10'
+- '2.11'
 target_platform:
 - linux-64
 zip_keys:
