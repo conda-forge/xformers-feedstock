@@ -1,7 +1,3 @@
-azure:
-  free_disk_space: true
-  settings_linux:
-    swapfile_size: 16GiB
 build_platform:
   osx_arm64: osx_64
 conda_build:
@@ -13,7 +9,6 @@ github:
   branch_name: main
   tooling_branch_name: main
 github_actions:
-  self_hosted: true
   timeout_minutes: 720
   triggers:
   - push
@@ -21,3 +16,7 @@ github_actions:
 provider:
   linux_64: github_actions
 test: native_and_emulated
+workflow_settings:
+  free_disk_space:
+    - provider: azure
+      value: quick
