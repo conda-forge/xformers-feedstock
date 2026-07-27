@@ -18,5 +18,5 @@ provider:
 test: native_and_emulated
 workflow_settings:
   free_disk_space:
-    - provider: azure
-      value: quick
+  - provider: azure
+    value: quick
