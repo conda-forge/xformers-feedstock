@@ -1,7 +1,7 @@
 About xformers-feedstock
 ========================
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/xformers-feedstock/blob/main/LICENSE.txt)
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/xformers-feedstock-pr78-followup-feedstock/blob/main/LICENSE.txt)
 
 Home: https://facebookresearch.github.io/xformers/
 
@@ -18,8 +18,8 @@ Current build status
 <table><tr>
     <td>GitHub Actions</td>
     <td>
-      <a href="https://github.com/conda-forge/xformers-feedstock/actions/workflows/conda-build.yml">
-        <img src="https://github.com/conda-forge/xformers-feedstock/actions/workflows/conda-build.yml/badge.svg?event=push&branch=main">
+      <a href="https://github.com/conda-forge/xformers-feedstock-pr78-followup-feedstock/actions/workflows/conda-build.yml">
+        <img src="https://github.com/conda-forge/xformers-feedstock-pr78-followup-feedstock/actions/workflows/conda-build.yml/badge.svg?event=push&branch=main">
       </a>
     </td>
   </tr>
@@ -29,8 +29,8 @@ Current build status
     <td>
       <details>
         <summary>
-          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18742&branchName=main">
-            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/xformers-feedstock?branchName=main">
+          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/xformers-feedstock-pr78-followup-feedstock?branchName=main">
           </a>
         </summary>
         <table>
@@ -38,8 +38,8 @@ Current build status
           <tbody><tr>
               <td>osx_64_is_python_mintruepython3.10.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=18742&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/xformers-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_is_python_mintruepython3.10.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/xformers-feedstock-pr78-followup-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_is_python_mintruepython3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr>
@@ -67,31 +67,73 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `xformers` can be installed with `conda`:
+How to use
+----------
+
+<details>
+<summary>With conda</summary>
 
 ```
 conda install xformers
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
 mamba install xformers
 ```
 
-It is possible to list all of the versions of `xformers` available on your platform with `conda`:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+# for adding to your local project
+pixi add xformers
+# for installing globally
+pixi global install xformers
+```
+
+</details>
+
+Search package versions
+-----------------------
+
+It is possible to list all of the versions of `xformers` available on your platform:
+
+<details>
+<summary>With conda</summary>
 
 ```
 conda search xformers --channel conda-forge
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
 mamba search xformers --channel conda-forge
 ```
 
-Alternatively, `mamba repoquery` may provide more information:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+pixi search xformers --channel conda-forge
+```
+
+</details>
+
+<details>
+<summary>With mamba repoquery, which may provide more information</summary>
 
 ```
 # Search all versions available on your platform:
@@ -103,6 +145,8 @@ mamba repoquery whoneeds xformers --channel conda-forge
 # List dependencies of `xformers`:
 mamba repoquery depends xformers --channel conda-forge
 ```
+
+</details>
 
 
 About conda-forge
