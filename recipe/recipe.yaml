@@ -3,7 +3,6 @@ context:
   build_number: 0
   cuda_build_string: cuda_${{ cuda_compiler_version | version_to_buildstring }}
   string_prefix: ${{ cuda_build_string if cuda_compiler_version != "None" else "cpu_" }}
-  python_check_max: "3.14"
 
 package:
   name: xformers
@@ -103,7 +102,7 @@ tests:
       pip_check: true
       python_version:
         - ${{ python_min }}.*
-        - ${{ python_check_max }}.*
+        - "*"
   - script:
       - python -m xformers.info
 
